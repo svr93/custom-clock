@@ -25,17 +25,10 @@
   },
   "scripts": {
     "build": "tsc",
-    "nodemon": "nodemon",
+    "build:watch": "tsc --watch",
     "node-static": "static",
-    "serve": "npm-run-all -p -r nodemon node-static",
+    "serve": "npm-run-all -p -r build:watch node-static",
     "test": "karma start"
-  },
-  "nodemonConfig": {
-    "watch": [
-      "src"
-    ],
-    "exec": "npm run build",
-    "ext": "ts"
   },
   "repository": {
     "type": "git",
