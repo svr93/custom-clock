@@ -4,7 +4,7 @@ module.exports = function(config) {
     files: [
       { pattern: './dist/component/**/*.js', type: 'module' },
       { pattern: './dist/global-declarations/index.js', type: 'module' },
-      { pattern: './dist/**/*.spec.js' },
+      { pattern: './dist/**/*.spec.js', type: 'module' },
     ],
     frameworks: ['jasmine'],
   })

@@ -7,7 +7,7 @@ export class CustomClockComponent extends HTMLElement {
   public static observedAttributes = Object.keys(EAttribute)
   public $highlightedHourList: number[] = []
 
-  constructor() {
+  private constructor() {
     super()
 
     const template = document.createElement('template')
