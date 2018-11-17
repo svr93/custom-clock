@@ -1,6 +1,7 @@
 {
     "extends": "tslint:recommended",
     "rules": {
+        "quotemark": false,
         "semicolon": false,
         "typedef": { "options": ["call-signature"] }
     }
