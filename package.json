@@ -1,0 +1,35 @@
+{
+  "name": "custom-clock",
+  "version": "0.0.0",
+  "description": "Simple clock component as native Custom Element",
+  "main": "not-exists-yet.js",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "tslint": "^5.11.0",
+    "typescript": "3.2.0-rc",
+    "typescript-eslint-parser": "^21.0.1"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/svr93/custom-clock.git"
+  },
+  "keywords": [
+    "custom-elements"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/svr93/custom-clock/issues"
+  },
+  "homepage": "https://github.com/svr93/custom-clock#readme"
+}
