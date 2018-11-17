@@ -3,6 +3,7 @@
     "rules": {
         "quotemark": false,
         "semicolon": false,
-        "typedef": { "options": ["call-signature"] }
+        "typedef": { "options": ["call-signature"] },
+        "variable-name": false
     }
 }
