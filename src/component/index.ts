@@ -1,4 +1,10 @@
+export enum EAttribute {
+  size,
+}
+type Attribute = keyof typeof EAttribute
+
 export class CustomClockComponent extends HTMLElement {
+  public static observedAttributes = Object.keys(EAttribute)
   public $highlightedHourList: number[] = []
 
   constructor() {
@@ -10,5 +16,9 @@ export class CustomClockComponent extends HTMLElement {
     `
 
     this.attachShadow({ mode: 'closed' }).appendChild(template.content)
+  }
+
+  public attributeChangedCallback(name: Attribute, _: string, newValue: string): void {
+    console.log(`${name} new value: ${newValue}`)
   }
 }

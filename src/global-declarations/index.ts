@@ -9,5 +9,3 @@ declare global {
     'custom-clock': CustomClockComponent,
   }
 }
-
-export {}
