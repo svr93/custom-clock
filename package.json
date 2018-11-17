@@ -16,6 +16,7 @@
     "typescript-eslint-parser": "^21.0.1"
   },
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
