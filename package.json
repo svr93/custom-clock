@@ -4,7 +4,9 @@
   "description": "Simple clock component as native Custom Element",
   "main": "not-exists-yet.js",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "typescript": "3.2.0-rc"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
