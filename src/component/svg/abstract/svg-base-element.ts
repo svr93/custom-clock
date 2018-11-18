@@ -8,6 +8,16 @@ export abstract class SVGBaseElement {
     this._element = document.createElementNS('http://www.w3.org/2000/svg', tagName)
   }
 
+  public addToSet(set: Set<SVGBaseElement>): SVGBaseElement {
+    set.add(this)
+    return this
+  }
+
+  public addClass(className: string): SVGBaseElement {
+    this.element.classList.add(className)
+    return this
+  }
+
   public destroy(): void {
     this._element.remove()
     Reflect.set(this, '_element', null)
