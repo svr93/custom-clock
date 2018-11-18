@@ -13,6 +13,11 @@ export abstract class SVGBaseElement {
     return this
   }
 
+  public addClass(className: string): SVGBaseElement {
+    this.element.classList.add(className)
+    return this
+  }
+
   public destroy(): void {
     this._element.remove()
     Reflect.set(this, '_element', null)
