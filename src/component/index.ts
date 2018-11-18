@@ -16,6 +16,35 @@ const INNER_CIRCLE_RADIUS = 48
 const OUTER_CIRCLE_LEN = 2 * Math.PI * (OUTER_CIRCLE_RADIUS - 1)
 const INNER_CIRCLE_LEN = 2 * Math.PI * (INNER_CIRCLE_RADIUS - 1)
 
+const STYLE = `
+  :host {
+    --delay: 0s;
+  }
+  .outer-circle {
+    stroke-dasharray: ${OUTER_CIRCLE_LEN};
+    stroke-dashoffset: 0;
+    animation: outer-circle 60s linear infinite;
+    animation-delay: var(--delay);
+  }
+  @keyframes outer-circle {
+    to {
+      stroke-dashoffset: ${-OUTER_CIRCLE_LEN};
+    }
+  }
+
+  .inner-circle {
+    stroke-dasharray: ${INNER_CIRCLE_LEN};
+    stroke-dashoffset: ${INNER_CIRCLE_LEN};
+    animation: inner-circle 60s linear infinite;
+    animation-delay: var(--delay);
+  }
+  @keyframes inner-circle {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+`
+
 export class CustomClockComponent extends HTMLElement {
   public static observedAttributes = Object.keys(EAttribute)
   public $highlightedHourList: number[] = []
@@ -27,35 +56,11 @@ export class CustomClockComponent extends HTMLElement {
   private constructor() {
     super()
 
-    const DELAY = new Date().getSeconds()
-
     const template = document.createElement('template')
     /* eslint-disable indent */
     template.innerHTML = `
       <style>
-        .outer-circle {
-          stroke-dasharray: ${OUTER_CIRCLE_LEN};
-          stroke-dashoffset: 0;
-          animation: outer-circle 60s linear infinite;
-          animation-delay: -${DELAY}s;
-        }
-        @keyframes outer-circle {
-          to {
-            stroke-dashoffset: ${-OUTER_CIRCLE_LEN};
-          }
-        }
-
-        .inner-circle {
-          stroke-dasharray: ${INNER_CIRCLE_LEN};
-          stroke-dashoffset: ${INNER_CIRCLE_LEN};
-          animation: inner-circle 60s linear infinite;
-          animation-delay: -${DELAY}s;
-        }
-        @keyframes inner-circle {
-          to {
-            stroke-dashoffset: 0;
-          }
-        }
+        ${STYLE}
       </style>
       <div>
         <svg xlmns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
@@ -83,6 +88,7 @@ export class CustomClockComponent extends HTMLElement {
   public connectedCallback(): void {
     const { style } = this._shadowRoot.host as HTMLElement
     style.display = 'inline-block'
+    style.setProperty('--delay', `${-new Date().getSeconds()}s`)
 
     this.setAttribute('project', 'https://github.com/svr93/custom-clock')
   }
