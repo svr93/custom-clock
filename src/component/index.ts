@@ -27,6 +27,8 @@ export class CustomClockComponent extends HTMLElement {
   private constructor() {
     super()
 
+    const DELAY = new Date().getSeconds()
+
     const template = document.createElement('template')
     /* eslint-disable indent */
     template.innerHTML = `
@@ -35,6 +37,7 @@ export class CustomClockComponent extends HTMLElement {
           stroke-dasharray: ${OUTER_CIRCLE_LEN};
           stroke-dashoffset: 0;
           animation: outer-circle 60s linear infinite;
+          animation-delay: -${DELAY}s;
         }
         @keyframes outer-circle {
           to {
@@ -46,6 +49,7 @@ export class CustomClockComponent extends HTMLElement {
           stroke-dasharray: ${INNER_CIRCLE_LEN};
           stroke-dashoffset: ${INNER_CIRCLE_LEN};
           animation: inner-circle 60s linear infinite;
+          animation-delay: -${DELAY}s;
         }
         @keyframes inner-circle {
           to {
@@ -53,7 +57,7 @@ export class CustomClockComponent extends HTMLElement {
           }
         }
       </style>
-      <div style="transform: rotate(-90deg)">
+      <div>
         <svg xlmns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
           ${
             new Circle(OUTER_CIRCLE_RADIUS, { borderColor: EBorderColor.DEEP_PURPLE })
