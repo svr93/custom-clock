@@ -18,20 +18,22 @@ export class CustomClockComponent extends HTMLElement {
     super()
 
     const template = document.createElement('template')
+    /* eslint-disable indent */
     template.innerHTML = `
       <div>
         <svg xlmns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+          ${
+            new Circle(50).addToSet(this.innerSVGElementSet)
+          }
         </svg>
       </div>
     `
+    /* eslint-enable indent */
 
     this._shadowRoot = this.attachShadow({ mode: 'closed' })
     this._shadowRoot.appendChild(template.content)
 
     this.parentDiv = this._shadowRoot.children[0] as HTMLDivElement
-    const circle = new Circle(50)
-    this.innerSVGElementSet.add(circle)
-    this.parentDiv.querySelector('svg')!.appendChild(circle.element)
   }
 
   public connectedCallback(): void {
