@@ -6,6 +6,16 @@ export enum EAttribute {
 }
 type Attribute = keyof typeof EAttribute
 
+enum EBorderColor {
+  DEEP_PURPLE = '#7c4dff',
+}
+
+const OUTER_CIRCLE_RADIUS = 50
+const INNER_CIRCLE_RADIUS = 48
+
+const OUTER_CIRCLE_LEN = 2 * Math.PI * (OUTER_CIRCLE_RADIUS - 1)
+const INNER_CIRCLE_LEN = 2 * Math.PI * (INNER_CIRCLE_RADIUS - 1)
+
 export class CustomClockComponent extends HTMLElement {
   public static observedAttributes = Object.keys(EAttribute)
   public $highlightedHourList: number[] = []
@@ -20,10 +30,40 @@ export class CustomClockComponent extends HTMLElement {
     const template = document.createElement('template')
     /* eslint-disable indent */
     template.innerHTML = `
-      <div>
+      <style>
+        .outer-circle {
+          stroke-dasharray: ${OUTER_CIRCLE_LEN};
+          stroke-dashoffset: 0;
+          animation: outer-circle 60s linear infinite;
+        }
+        @keyframes outer-circle {
+          to {
+            stroke-dashoffset: ${-OUTER_CIRCLE_LEN};
+          }
+        }
+
+        .inner-circle {
+          stroke-dasharray: ${INNER_CIRCLE_LEN};
+          stroke-dashoffset: ${INNER_CIRCLE_LEN};
+          animation: inner-circle 60s linear infinite;
+        }
+        @keyframes inner-circle {
+          to {
+            stroke-dashoffset: 0;
+          }
+        }
+      </style>
+      <div style="transform: rotate(-90deg)">
         <svg xlmns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
           ${
-            new Circle(50).addToSet(this.innerSVGElementSet)
+            new Circle(OUTER_CIRCLE_RADIUS, { borderColor: EBorderColor.DEEP_PURPLE })
+              .addClass('outer-circle')
+              .addToSet(this.innerSVGElementSet)
+          }
+          ${
+            new Circle(INNER_CIRCLE_RADIUS, { borderColor: EBorderColor.DEEP_PURPLE })
+              .addClass('inner-circle')
+              .addToSet(this.innerSVGElementSet)
           }
         </svg>
       </div>
@@ -33,7 +73,7 @@ export class CustomClockComponent extends HTMLElement {
     this._shadowRoot = this.attachShadow({ mode: 'closed' })
     this._shadowRoot.appendChild(template.content)
 
-    this.parentDiv = this._shadowRoot.children[0] as HTMLDivElement
+    this.parentDiv = this._shadowRoot.querySelector('div')!
   }
 
   public connectedCallback(): void {
