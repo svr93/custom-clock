@@ -1,6 +1,4 @@
-import { SVGBaseElement } from './abstract/svg-base-element.js'
-
-type Point = Record<'x' | 'y', number>
+import { Point, SVGBaseElement } from './abstract/svg-base-element.js'
 
 export class Line extends SVGBaseElement {
   constructor(p1: Point, p2: Point, params: Partial<{ color: string }> = {}) {

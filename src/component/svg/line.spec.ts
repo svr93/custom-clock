@@ -17,4 +17,11 @@ describe('svg line class', () => {
     const line = new Line({ x: 5, y: 6 }, { x: 7, y: 8 }, { color: 'rgb(100, 200, 300)' })
     expect(line.element.getAttribute('stroke')).toBe('rgb(100, 200, 300)')
   })
+
+  it('creates animation for line', () => {
+    const line = new Line({ x: 9, y: 10 }, { x: 11, y: 12 })
+    line.setRotateAnimation({ x: 9, y: 10 }, { intervalInSeconds: 60 * 60, delayInSeconds: 1 * 60 })
+    line.setRotateAnimation({ x: 9, y: 10 }, { intervalInSeconds: 60 * 60, delayInSeconds: 2 * 60 })
+    expect(line.element.children[0].tagName === 'animateTransform')
+  })
 })

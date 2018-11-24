@@ -1,3 +1,5 @@
+export type Point = Record<'x' | 'y', number>
+
 export abstract class SVGBaseElement {
   public get element(): SVGElement {
     return this._element
@@ -6,6 +8,13 @@ export abstract class SVGBaseElement {
 
   constructor(tagName: keyof SVGElementTagNameMap) {
     this._element = document.createElementNS('http://www.w3.org/2000/svg', tagName)
+  }
+
+  public setRotateAnimation(
+    point: Point,
+    params: Record<'intervalInSeconds' | 'delayInSeconds', number>,
+  ): SVGBaseElement {
+    return this
   }
 
   public addToSet(set: Set<SVGBaseElement>): SVGBaseElement {
