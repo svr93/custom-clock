@@ -14,6 +14,7 @@ export abstract class SVGBaseElement {
     point: Point,
     params: Record<'intervalInSeconds' | 'delayInSeconds', number>,
   ): SVGBaseElement {
+    this.appendAnimateTransformTag()
     return this
   }
 
@@ -34,5 +35,11 @@ export abstract class SVGBaseElement {
 
   public toString(): string {
     return this.element.outerHTML
+  }
+
+  private appendAnimateTransformTag(): void {
+    if (!this.element.children.length) {
+      this.element.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'animateTransform'))
+    }
   }
 }
