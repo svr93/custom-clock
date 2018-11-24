@@ -1,4 +1,4 @@
-import { SVGBaseElement } from './abstract/svg-base-element.js'
+import { Point, SVGBaseElement } from './abstract/svg-base-element.js'
 
 export class Circle extends SVGBaseElement {
   constructor(radius: number, params: Partial<{ borderColor: string }> = {}) {
@@ -11,5 +11,13 @@ export class Circle extends SVGBaseElement {
     this.element.setAttribute('transform', 'rotate(-90) translate(-100)')
     this.element.setAttribute('fill', 'transparent')
     this.element.setAttribute('stroke', params.borderColor || 'black')
+  }
+
+  public setRotateAnimation(
+    point: Point,
+    params: Record<'intervalInSeconds' | 'delayInSeconds', number>,
+  ): SVGBaseElement {
+    console.error('NOT_IMPLEMENTED')
+    return this
   }
 }

@@ -10,13 +10,10 @@ export abstract class SVGBaseElement {
     this._element = document.createElementNS('http://www.w3.org/2000/svg', tagName)
   }
 
-  public setRotateAnimation(
+  public abstract setRotateAnimation(
     point: Point,
     params: Record<'intervalInSeconds' | 'delayInSeconds', number>,
-  ): SVGBaseElement {
-    this.appendAnimateTransformTag()
-    return this
-  }
+  ): SVGBaseElement
 
   public addToSet(set: Set<SVGBaseElement>): SVGBaseElement {
     set.add(this)
@@ -35,11 +32,5 @@ export abstract class SVGBaseElement {
 
   public toString(): string {
     return this.element.outerHTML
-  }
-
-  private appendAnimateTransformTag(): void {
-    if (!this.element.children.length) {
-      this.element.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'animateTransform'))
-    }
   }
 }
