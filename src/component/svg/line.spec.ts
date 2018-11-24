@@ -22,6 +22,6 @@ describe('svg line class', () => {
     const line = new Line({ x: 9, y: 10 }, { x: 11, y: 12 })
     line.setRotateAnimation({ x: 9, y: 10 }, { intervalInSeconds: 60 * 60, delayInSeconds: 1 * 60 })
     line.setRotateAnimation({ x: 9, y: 10 }, { intervalInSeconds: 60 * 60, delayInSeconds: 2 * 60 })
-    expect(line.element.children[0].tagName === 'animateTransform')
+    expect(line.element.children[0].tagName).toBe('animateTransform')
   })
 })
