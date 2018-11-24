@@ -11,5 +11,7 @@ export class Line extends SVGBaseElement {
 
     this.element.setAttribute('y1', String(p1.y))
     this.element.setAttribute('y2', String(p2.y))
+
+    this.element.setAttribute('stroke', params.color || 'black')
   }
 }
