@@ -1,3 +1,5 @@
+export type Point = Record<'x' | 'y', number>
+
 export abstract class SVGBaseElement {
   public get element(): SVGElement {
     return this._element
@@ -6,6 +8,14 @@ export abstract class SVGBaseElement {
 
   constructor(tagName: keyof SVGElementTagNameMap) {
     this._element = document.createElementNS('http://www.w3.org/2000/svg', tagName)
+  }
+
+  public setRotateAnimation(
+    point: Point,
+    params: Record<'intervalInSeconds' | 'delayInSeconds', number>,
+  ): SVGBaseElement {
+    this.appendAnimateTransformTag()
+    return this
   }
 
   public addToSet(set: Set<SVGBaseElement>): SVGBaseElement {
@@ -25,5 +35,11 @@ export abstract class SVGBaseElement {
 
   public toString(): string {
     return this.element.outerHTML
+  }
+
+  private appendAnimateTransformTag(): void {
+    if (!this.element.children.length) {
+      this.element.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'animateTransform'))
+    }
   }
 }
