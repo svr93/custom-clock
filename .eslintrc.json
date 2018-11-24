@@ -5,10 +5,12 @@
         "ecmaVersion": 8,
         "sourceType": "module"
     },
+    "plugins": ["jasmine"],
     "rules": {
         "comma-dangle": "off",
         "no-undef": "off",
         "no-unused-vars": "off",
-        "space-before-function-paren": "off"
+        "space-before-function-paren": "off",
+        "jasmine/expect-matcher": "error"
     }
 }
