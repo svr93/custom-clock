@@ -10,6 +10,7 @@
     "eslint": "^5.9.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jasmine": "^2.10.1",
     "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
@@ -31,7 +32,9 @@
     "serve": "npm-run-all -p -r build:watch node-static",
     "test": "karma start"
   },
-  "eslintIgnore": ["dist"],
+  "eslintIgnore": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/svr93/custom-clock.git"
