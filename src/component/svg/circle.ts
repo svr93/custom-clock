@@ -14,8 +14,7 @@ export class Circle extends SVGBaseElement {
   }
 
   public setRotateAnimation(
-    point: Point,
-    params: Record<'intervalInSeconds' | 'delayInSeconds', number>,
+    _params: Record<'intervalInSeconds' | 'delayInSeconds' | 'from' | 'to', number>,
   ): SVGBaseElement {
     console.error('NOT_IMPLEMENTED')
     return this
