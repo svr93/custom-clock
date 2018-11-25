@@ -1,5 +1,6 @@
 import { SVGBaseElement } from './svg/abstract/svg-base-element.js'
 import { Circle } from './svg/circle.js'
+import { Line } from './svg/line.js'
 
 export enum EAttribute {
   size,
@@ -9,6 +10,8 @@ type Attribute = keyof typeof EAttribute
 enum EBorderColor {
   DEEP_PURPLE = '#7c4dff',
 }
+
+const VIEW_BOX_SIZE = 100
 
 const OUTER_CIRCLE_RADIUS = 50
 const INNER_CIRCLE_RADIUS = 48
@@ -52,18 +55,23 @@ export class CustomClockComponent extends HTMLElement {
   private parentDiv: HTMLDivElement
 
   private innerSVGElementSet = new Set<SVGBaseElement>()
+  private date = new Date()
 
   private constructor() {
     super()
 
     const template = document.createElement('template')
+    const center = {
+      x: VIEW_BOX_SIZE / 2,
+      y: VIEW_BOX_SIZE / 2,
+    }
     /* eslint-disable indent */
     template.innerHTML = `
       <style>
         ${STYLE}
       </style>
       <div>
-        <svg xlmns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <svg xlmns="http://www.w3.org/2000/svg" viewBox="0 0 ${VIEW_BOX_SIZE} ${VIEW_BOX_SIZE}">
           ${
             new Circle(OUTER_CIRCLE_RADIUS, { borderColor: EBorderColor.DEEP_PURPLE })
               .addClass('outer-circle')
@@ -73,6 +81,32 @@ export class CustomClockComponent extends HTMLElement {
             new Circle(INNER_CIRCLE_RADIUS, { borderColor: EBorderColor.DEEP_PURPLE })
               .addClass('inner-circle')
               .addToSet(this.innerSVGElementSet)
+          }
+          ${
+            // minute
+            new Line(center, { ...center, x: center.x + INNER_CIRCLE_RADIUS / 1.125 }, {
+              color: EBorderColor.DEEP_PURPLE,
+            })
+            .setRotateAnimation({
+              delayInSeconds: -(60) * this.calculateMinuteHandShift(),
+              from: -90,
+              intervalInSeconds: (60) * 60,
+              to: 270,
+            })
+            .addToSet(this.innerSVGElementSet)
+          }
+          ${
+            // hour
+            new Line(center, { ...center, x: center.x + INNER_CIRCLE_RADIUS / 1.5 }, {
+              color: EBorderColor.DEEP_PURPLE,
+            })
+            .setRotateAnimation({
+              delayInSeconds: -(60 ** 2) * this.calculateHourHandShift(),
+              from: -90,
+              intervalInSeconds: (60 ** 2) * 12,
+              to: 270,
+            })
+            .addToSet(this.innerSVGElementSet)
           }
         </svg>
       </div>
@@ -88,7 +122,7 @@ export class CustomClockComponent extends HTMLElement {
   public connectedCallback(): void {
     const { style } = this._shadowRoot.host as HTMLElement
     style.display = 'inline-block'
-    style.setProperty('--delay', `${-new Date().getSeconds()}s`)
+    style.setProperty('--delay', `${-this.date.getSeconds()}s`)
 
     this.setAttribute('project', 'https://github.com/svr93/custom-clock')
   }
@@ -102,5 +136,13 @@ export class CustomClockComponent extends HTMLElement {
       case 'size':
         Object.assign(this.parentDiv.style, { width: newValue, height: newValue })
     }
+  }
+
+  private calculateMinuteHandShift(): number {
+    return this.date.getMinutes() + this.date.getSeconds() / 60
+  }
+
+  private calculateHourHandShift(): number {
+    return (this.date.getHours() % 12) + this.calculateMinuteHandShift() / 60
   }
 }
