@@ -11,8 +11,7 @@ export abstract class SVGBaseElement {
   }
 
   public abstract setRotateAnimation(
-    point: Point,
-    params: Record<'intervalInSeconds' | 'delayInSeconds', number>,
+    params: Record<'intervalInSeconds' | 'delayInSeconds' | 'from' | 'to', number>,
   ): SVGBaseElement
 
   public addToSet(set: Set<SVGBaseElement>): SVGBaseElement {
