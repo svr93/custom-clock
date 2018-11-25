@@ -1,6 +1,6 @@
 {
   "name": "custom-clock",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Simple clock component as native Custom Element",
   "main": "dist/component/index.js",
   "types": "dist/component/index.d.ts",
