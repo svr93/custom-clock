@@ -1,3 +1,5 @@
+import { $enum } from '../../node_modules/ts-enum-util/src/index.js'
+
 import { SVGBaseElement } from './svg/abstract/svg-base-element.js'
 import { Circle } from './svg/circle.js'
 import { Line } from './svg/line.js'
@@ -49,7 +51,7 @@ const STYLE = `
 `
 
 export class CustomClockComponent extends HTMLElement {
-  public static observedAttributes = Object.keys(EAttribute)
+  public static observedAttributes = $enum(EAttribute).getKeys()
   public $highlightedHourList: number[] = []
   private _shadowRoot: ShadowRoot
   private parentDiv: HTMLDivElement

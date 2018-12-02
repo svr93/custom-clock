@@ -4,4 +4,6 @@
 
 * Remove unnecessary dependencies (nodemon)
 
-* Use stable TypeScript version (3.2)
+* Add `ts-enum-util` lib to fix incorrect `observedAttributes` array
+
+* Use stable TypeScript version (3.0, compatible with `ts-enum-util`)
