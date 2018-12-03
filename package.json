@@ -2,8 +2,8 @@
   "name": "custom-clock",
   "version": "0.0.2",
   "description": "Simple clock component as native Custom Element",
-  "main": "dist/component/index.js",
-  "types": "dist/component/index.d.ts",
+  "browser": "dist/src/component/index.js",
+  "types": "dist/src/component/index.d.ts",
   "dependencies": {
     "ts-enum-util": "^3.1.0"
   },
@@ -30,6 +30,7 @@
     "build": "tsc --declaration",
     "build:watch": "tsc --watch",
     "node-static": "static",
+    "prepublish": "npm run build",
     "serve": "npm-run-all -p -r build:watch node-static",
     "test": "karma start"
   },
