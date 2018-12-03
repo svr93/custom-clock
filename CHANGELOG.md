@@ -7,3 +7,7 @@
 * Add `ts-enum-util` lib to fix incorrect `observedAttributes` array
 
 * Use stable TypeScript version (3.0, compatible with `ts-enum-util`)
+
+## 0.0.3 - 2018-12-03
+
+* Fix npm metadata; ready to publish
