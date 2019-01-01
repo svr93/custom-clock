@@ -15,3 +15,7 @@
 ## 0.0.4 - 2019-01-01
 
 * Fix line rendering in Firefox. Firefox doesn't support SMIL animations inside Web Components, so CSS animations used
+
+## 0.0.5 - 2019-01-01
+
+* Smooth switching between circles
