@@ -15,8 +15,11 @@ enum EBorderColor {
 
 const VIEW_BOX_SIZE = 100
 
-const OUTER_CIRCLE_RADIUS = 50
-const INNER_CIRCLE_RADIUS = 48
+const OUTER_CIRCLE_RADIUS = 48
+const INNER_CIRCLE_RADIUS = 46
+
+const RADIUS_RATIO = OUTER_CIRCLE_RADIUS / INNER_CIRCLE_RADIUS
+const TRANSLATE_RATIO = RADIUS_RATIO * (VIEW_BOX_SIZE / OUTER_CIRCLE_RADIUS)
 
 const OUTER_CIRCLE_LEN = 2 * Math.PI * (OUTER_CIRCLE_RADIUS - 1)
 const INNER_CIRCLE_LEN = 2 * Math.PI * (INNER_CIRCLE_RADIUS - 1)
@@ -24,6 +27,15 @@ const INNER_CIRCLE_LEN = 2 * Math.PI * (INNER_CIRCLE_RADIUS - 1)
 const STYLE = `
   :host {
     --delay: 0s;
+  }
+  g.circle {
+    animation: g-circle 60s linear infinite;
+    animation-delay: var(--delay);
+  }
+  @keyframes g-circle {
+    to {
+      transform: translate(-${TRANSLATE_RATIO}%, -${TRANSLATE_RATIO}%) scale(${RADIUS_RATIO});
+    }
   }
   .outer-circle {
     stroke-dasharray: ${OUTER_CIRCLE_LEN};
@@ -74,16 +86,20 @@ export class CustomClockComponent extends HTMLElement {
       </style>
       <div>
         <svg xlmns="http://www.w3.org/2000/svg" viewBox="0 0 ${VIEW_BOX_SIZE} ${VIEW_BOX_SIZE}">
-          ${
-            new Circle(OUTER_CIRCLE_RADIUS, { borderColor: EBorderColor.DEEP_PURPLE })
-              .addClass('outer-circle')
-              .addToSet(this.innerSVGElementSet)
-          }
-          ${
-            new Circle(INNER_CIRCLE_RADIUS, { borderColor: EBorderColor.DEEP_PURPLE })
-              .addClass('inner-circle')
-              .addToSet(this.innerSVGElementSet)
-          }
+          <g class="circle">
+            ${
+              new Circle(OUTER_CIRCLE_RADIUS, { borderColor: EBorderColor.DEEP_PURPLE })
+                .addClass('outer-circle')
+                .addToSet(this.innerSVGElementSet)
+            }
+          </g>
+          <g class="circle">
+            ${
+              new Circle(INNER_CIRCLE_RADIUS, { borderColor: EBorderColor.DEEP_PURPLE })
+                .addClass('inner-circle')
+                .addToSet(this.innerSVGElementSet)
+            }
+          </g>
           ${
             // minute
             new Line(center, { ...center, x: center.x + INNER_CIRCLE_RADIUS / 1.125 }, {
