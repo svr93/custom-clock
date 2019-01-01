@@ -11,7 +11,17 @@ export abstract class SVGBaseElement {
   }
 
   public abstract setRotateAnimation(
-    params: Record<'intervalInSeconds' | 'delayInSeconds' | 'from' | 'to', number>,
+    params: Record<'intervalInSeconds' | 'from' | 'to', number> & (
+      {
+        /**
+         * @description `reference` used for CSS variable name (live binding)
+         */
+        delayInSeconds: { type: 'reference', name: string } | { type: 'value', value: number },
+      } | {
+        /** @deprecated */
+        delayInSeconds: number,
+      }
+    ),
   ): SVGBaseElement
 
   public addToSet(set: Set<SVGBaseElement>): SVGBaseElement {
