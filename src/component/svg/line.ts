@@ -11,7 +11,8 @@ export class Line extends SVGBaseElement {
     this.element.setAttribute('y2', String(Math.abs(p2.y - p1.y)))
 
     const rP = this.selectRotationPoint(p1, p2)
-    this.element.setAttribute('transform', `translate(${rP.x},${rP.y})`)
+    // this.element.setAttribute('transform', `translate(${rP.x},${rP.y})`)
+    this.element.style.transform = `translate(${rP.x}%, ${rP.y}%)`
 
     this.element.setAttribute('stroke', params.color || 'black')
   }
@@ -21,20 +22,26 @@ export class Line extends SVGBaseElement {
   ): SVGBaseElement {
     const [firstElement] = this.appendAnimateTransformTags()
 
-    Object
-      .entries({
-        attributeName: 'transform',
-        type: 'rotate',
+    const rndClassName = `line-${Math.round(Math.random() * 10e4)}`
+    this.element.classList.add(rndClassName)
 
-        additive: 'sum',
-        repeatCount: 'indefinite',
-
-        begin: `${params.delayInSeconds}s`,
-        dur: `${params.intervalInSeconds}s`,
-        from: params.from,
-        to: params.to,
-      })
-      .forEach(([key, value]) => firstElement.setAttribute(key, String(value)))
+    const styleText = `
+      .${rndClassName} {
+        animation: ${rndClassName} ${params.intervalInSeconds}s linear infinite;
+        animation-delay: ${params.delayInSeconds}s;
+      }
+      @keyframes ${rndClassName} {
+        from {
+          transform: ${this.element.style.transform} rotate(${params.from}deg);
+        }
+        to {
+          transform: ${this.element.style.transform} rotate(${params.to}deg);
+        }
+      }
+    `
+    const styleTag = document.createElement('style')
+    styleTag.innerHTML = styleText
+    this.element.appendChild(styleTag)
 
     return this
   }

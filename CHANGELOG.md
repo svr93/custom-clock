@@ -11,3 +11,7 @@
 ## 0.0.3 - 2018-12-03
 
 * Fix npm metadata; ready to publish
+
+## 0.0.4 - 2019-01-01
+
+* Fix line rendering in Firefox. Firefox doesn't support SMIL animations inside Web Components, so CSS animations used
