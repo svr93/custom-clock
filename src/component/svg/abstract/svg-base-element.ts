@@ -8,6 +8,7 @@ export abstract class SVGBaseElement {
 
   constructor(tagName: keyof SVGElementTagNameMap) {
     this._element = document.createElementNS('http://www.w3.org/2000/svg', tagName)
+    this._element.setAttribute('data-reference', String(this.getRandomInteger()))
   }
 
   public abstract setRotateAnimation(
@@ -41,5 +42,9 @@ export abstract class SVGBaseElement {
 
   public toString(): string {
     return this.element.outerHTML
+  }
+
+  private getRandomInteger(): number {
+    return crypto.getRandomValues(new Uint32Array(1))[0]
   }
 }
