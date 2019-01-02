@@ -25,12 +25,9 @@ const OUTER_CIRCLE_LEN = 2 * Math.PI * (OUTER_CIRCLE_RADIUS - 1)
 const INNER_CIRCLE_LEN = 2 * Math.PI * (INNER_CIRCLE_RADIUS - 1)
 
 const STYLE = `
-  :host {
-    --delay: 0s;
-  }
   g.circle {
     animation: g-circle 60s linear infinite;
-    animation-delay: var(--delay);
+    animation-delay: var(--secondDelay);
   }
   @keyframes g-circle {
     to {
@@ -41,7 +38,7 @@ const STYLE = `
     stroke-dasharray: ${OUTER_CIRCLE_LEN};
     stroke-dashoffset: 0;
     animation: outer-circle 60s linear infinite;
-    animation-delay: var(--delay);
+    animation-delay: var(--secondDelay);
   }
   @keyframes outer-circle {
     to {
@@ -53,7 +50,7 @@ const STYLE = `
     stroke-dasharray: ${INNER_CIRCLE_LEN};
     stroke-dashoffset: ${INNER_CIRCLE_LEN};
     animation: inner-circle 60s linear infinite;
-    animation-delay: var(--delay);
+    animation-delay: var(--secondDelay);
   }
   @keyframes inner-circle {
     to {
@@ -106,7 +103,7 @@ export class CustomClockComponent extends HTMLElement {
               color: EBorderColor.DEEP_PURPLE,
             })
             .setRotateAnimation({
-              delayInSeconds: { type: 'value', value: -(60) * this.calculateMinuteHandShift() },
+              delayInSeconds: { type: 'reference', name: 'minuteDelay' },
               from: -90,
               intervalInSeconds: (60) * 60,
               to: 270,
@@ -119,7 +116,7 @@ export class CustomClockComponent extends HTMLElement {
               color: EBorderColor.DEEP_PURPLE,
             })
             .setRotateAnimation({
-              delayInSeconds: { type: 'value', value: -(60 ** 2) * this.calculateHourHandShift() },
+              delayInSeconds: { type: 'reference', name: 'hourDelay' },
               from: -90,
               intervalInSeconds: (60 ** 2) * 12,
               to: 270,
@@ -140,7 +137,7 @@ export class CustomClockComponent extends HTMLElement {
   public connectedCallback(): void {
     const { style } = this._shadowRoot.host as HTMLElement
     style.display = 'inline-block'
-    style.setProperty('--delay', `${-this.date.getSeconds()}s`)
+    this.setDelay()
 
     this.setAttribute('project', 'https://github.com/svr93/custom-clock')
   }
@@ -156,6 +153,15 @@ export class CustomClockComponent extends HTMLElement {
     }
   }
 
+  private setDelay(): void {
+    const { style } = this._shadowRoot.host as HTMLElement
+    this.date = new Date()
+
+    style.setProperty('--secondDelay', `${-this.date.getSeconds()}s`)
+    style.setProperty('--minuteDelay', `${-60 * this.calculateMinuteHandShift()}s`)
+    style.setProperty('--hourDelay', `${-(60 ** 2) * this.calculateHourHandShift()}s`)
+  }
+
   private restartAnimation(): void {
     const elementList = this.getAnimatedElementList()
     const classTupleList = elementList.map((item) => Array.from(item.classList))
@@ -163,7 +169,7 @@ export class CustomClockComponent extends HTMLElement {
       item.classList.remove(...classTupleList[i])
     })
     this.triggerReflow()
-    // TODO: change variables
+    this.setDelay()
     elementList.forEach((item, i) => {
       item.classList.add(...classTupleList[i])
     })
