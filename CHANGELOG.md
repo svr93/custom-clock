@@ -19,3 +19,7 @@
 ## 0.0.5 - 2019-01-01
 
 * Smooth switching between circles
+
+## 0.0.6 - 2019-01-02
+
+* Restore time after background->foreground switch
