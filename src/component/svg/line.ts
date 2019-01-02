@@ -18,7 +18,9 @@ export class Line extends SVGBaseElement {
   }
 
   public setRotateAnimation(
-    params: Record<'intervalInSeconds' | 'delayInSeconds' | 'from' | 'to', number>,
+    params: Record<'intervalInSeconds' | 'from' | 'to', number> & {
+      delayInSeconds: { type: 'reference', name: string } | { type: 'value', value: number },
+    },
   ): SVGBaseElement {
     const [firstElement] = this.appendAnimateTransformTags()
 
@@ -28,7 +30,7 @@ export class Line extends SVGBaseElement {
     const styleText = `
       .${rndClassName} {
         animation: ${rndClassName} ${params.intervalInSeconds}s linear infinite;
-        animation-delay: ${params.delayInSeconds}s;
+        animation-delay: ${getAnimationDelay()};
       }
       @keyframes ${rndClassName} {
         from {
@@ -44,6 +46,12 @@ export class Line extends SVGBaseElement {
     this.element.appendChild(styleTag)
 
     return this
+
+    function getAnimationDelay(): string {
+      return params.delayInSeconds.type === 'reference'
+        ? `var(--${params.delayInSeconds.name})`
+        : `${params.delayInSeconds.value}s`
+    }
   }
 
   private appendAnimateTransformTags(): [SVGElement, SVGElement] {
