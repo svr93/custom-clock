@@ -156,6 +156,35 @@ export class CustomClockComponent extends HTMLElement {
     }
   }
 
+  private restartAnimation(): void {
+    const elementList = this.getAnimatedElementList()
+    const classTupleList = elementList.map((item) => Array.from(item.classList))
+    elementList.forEach((item, i) => {
+      item.classList.remove(...classTupleList[i])
+    })
+    this.triggerReflow()
+    // TODO: change variables
+    elementList.forEach((item, i) => {
+      item.classList.add(...classTupleList[i])
+    })
+  }
+
+  private getAnimatedElementList(): HTMLElement[] {
+    return Array
+      .from(this.innerSVGElementSet)
+      .map((item) => {
+        const reference = item.element.getAttribute('data-reference')!
+        return this._shadowRoot.querySelector<HTMLElement>(`[data-reference="${reference}"]`)!
+      })
+      .flatMap((item) => {
+        return [item, item.parentElement!]
+      })
+  }
+
+  private triggerReflow(): void {
+    void document.body.offsetHeight
+  }
+
   private calculateMinuteHandShift(): number {
     return this.date.getMinutes() + this.date.getSeconds() / 60
   }
