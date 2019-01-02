@@ -106,7 +106,7 @@ export class CustomClockComponent extends HTMLElement {
               color: EBorderColor.DEEP_PURPLE,
             })
             .setRotateAnimation({
-              delayInSeconds: -(60) * this.calculateMinuteHandShift(),
+              delayInSeconds: { type: 'value', value: -(60) * this.calculateMinuteHandShift() },
               from: -90,
               intervalInSeconds: (60) * 60,
               to: 270,
@@ -119,7 +119,7 @@ export class CustomClockComponent extends HTMLElement {
               color: EBorderColor.DEEP_PURPLE,
             })
             .setRotateAnimation({
-              delayInSeconds: -(60 ** 2) * this.calculateHourHandShift(),
+              delayInSeconds: { type: 'value', value: -(60 ** 2) * this.calculateHourHandShift() },
               from: -90,
               intervalInSeconds: (60 ** 2) * 12,
               to: 270,
