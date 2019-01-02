@@ -68,6 +68,8 @@ export class CustomClockComponent extends HTMLElement {
   private innerSVGElementSet = new Set<SVGBaseElement>()
   private date = new Date()
 
+  private visibilityChangeListener = () => this.restartAnimation()
+
   private constructor() {
     super()
 
@@ -140,10 +142,14 @@ export class CustomClockComponent extends HTMLElement {
     this.setDelay()
 
     this.setAttribute('project', 'https://github.com/svr93/custom-clock')
+
+    document.addEventListener('visibilitychange', this.visibilityChangeListener)
   }
 
   public disconnectedCallback(): void {
     this.innerSVGElementSet.forEach((item) => item.destroy())
+
+    document.removeEventListener('visibilitychange', this.visibilityChangeListener)
   }
 
   public attributeChangedCallback(name: Attribute, _: string, newValue: string): void {
