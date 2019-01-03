@@ -36,13 +36,13 @@ const STYLE = `
   }
   .outer-circle {
     stroke-dasharray: ${OUTER_CIRCLE_LEN};
-    stroke-dashoffset: 0;
+    stroke-dashoffset: ${OUTER_CIRCLE_LEN};
     animation: outer-circle 60s linear infinite;
     animation-delay: var(--secondDelay);
   }
   @keyframes outer-circle {
     to {
-      stroke-dashoffset: ${-OUTER_CIRCLE_LEN};
+      stroke-dashoffset: 0;
     }
   }
 
@@ -88,6 +88,12 @@ export class CustomClockComponent extends HTMLElement {
           <g class="circle">
             ${
               new Circle(OUTER_CIRCLE_RADIUS, { borderColor: EBorderColor.DEEP_PURPLE })
+                .addToSet(this.innerSVGElementSet)
+            }
+          </g>
+          <g class="circle">
+            ${
+              new Circle(OUTER_CIRCLE_RADIUS + 1, { borderColor: 'white', borderWidth: 2 })
                 .addClass('outer-circle')
                 .addToSet(this.innerSVGElementSet)
             }
