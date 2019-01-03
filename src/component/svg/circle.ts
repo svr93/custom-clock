@@ -1,10 +1,11 @@
 import { SVGBaseElement } from './abstract/svg-base-element.js'
 
 export class Circle extends SVGBaseElement {
-  constructor(radius: number, params: Partial<{ borderColor: string }> = {}) {
+  constructor(radius: number, params: Partial<{ borderColor: string, borderWidth: number }> = {}) {
     super('circle')
-    const BORDER_WIDTH = 1
-    this.element.setAttribute('r', String(radius - BORDER_WIDTH))
+    const borderWidth = params.borderWidth || 1
+    this.element.setAttribute('stroke-width', String(borderWidth))
+    this.element.setAttribute('r', String(radius - borderWidth))
 
     this.element.setAttribute('cx', '50%')
     this.element.setAttribute('cy', '50%')
