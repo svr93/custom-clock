@@ -23,3 +23,7 @@
 ## 0.0.6 - 2019-01-02
 
 * Restore time after background->foreground switch
+
+## 0.0.7 - 2019-01-03
+
+* Fix Safari SVG `stroke-dashoffset` problem: Safari doesn't support negative values
