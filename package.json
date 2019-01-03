@@ -1,6 +1,6 @@
 {
   "name": "custom-clock",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Simple clock component as native Custom Element",
   "browser": "dist/src/component/index.js",
   "types": "dist/src/component/index.d.ts",
@@ -30,7 +30,7 @@
     "build": "tsc --declaration",
     "build:watch": "tsc --watch",
     "node-static": "static",
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "serve": "npm-run-all -p -r build:watch node-static",
     "test": "karma start"
   },
@@ -42,7 +42,7 @@
     "url": "git+https://github.com/svr93/custom-clock.git"
   },
   "keywords": [
-    "custom-elements"
+    "custom-elements", "clock", "web component"
   ],
   "author": "",
   "license": "MIT",
