@@ -2,7 +2,7 @@
 
 Simple clock component as native Custom Element
 
-![clock](https://raw.githubusercontent.com/svr93/custom-clock/master/img.png)
+![clock](https://github.com/svr93/custom-clock/raw/master/img.gif)
 
 ## Browser support
 
