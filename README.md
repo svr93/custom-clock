@@ -1,6 +1,6 @@
 # &lt;custom-clock&gt; Web Component
 
-Simple clock component as native Custom Element
+Simple clock component built with SVG & CSS Animations
 
 ![clock](https://github.com/svr93/custom-clock/raw/master/img.gif)
 
@@ -24,6 +24,8 @@ You can use existing JavaScript & TypeScript definitions via special import:
 ```ts
 import 'custom-clock/dist/src/global-declarations'
 ```
+
+Please see [the discussion](https://twitter.com/treshugart/status/1072812098541957120) about predefined names.
 
 ### Attributes
 
