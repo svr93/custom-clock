@@ -108,7 +108,7 @@ export class CustomClockComponent extends HTMLElement {
           ${
             // minute
             new Line(center, { ...center, x: center.x + INNER_CIRCLE_RADIUS / 1.125 }, {
-              color: EBorderColor.DEEP_PURPLE,
+              color: { type: 'value', value: EBorderColor.DEEP_PURPLE },
             })
             .setRotateAnimation({
               delayInSeconds: { type: 'reference', name: 'minuteDelay' },
@@ -121,7 +121,7 @@ export class CustomClockComponent extends HTMLElement {
           ${
             // hour
             new Line(center, { ...center, x: center.x + INNER_CIRCLE_RADIUS / 1.5 }, {
-              color: EBorderColor.DEEP_PURPLE,
+              color: { type: 'value', value: EBorderColor.DEEP_PURPLE },
             })
             .setRotateAnimation({
               delayInSeconds: { type: 'reference', name: 'hourDelay' },
