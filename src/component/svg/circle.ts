@@ -13,8 +13,7 @@ export class Circle extends SVGBaseElement {
 
     this.element.setAttribute('cx', '50%')
     this.element.setAttribute('cy', '50%')
-    // TODO: remove hard-coded `100`
-    this.element.setAttribute('transform', 'rotate(-90) translate(-100)')
+    this.element.style.setProperty('transform', 'rotate(-90deg) translate(-100%)')
     this.element.setAttribute('fill', 'transparent')
     this.element.style.setProperty('stroke', params.borderColor ? getColor(params.borderColor) : 'black')
 

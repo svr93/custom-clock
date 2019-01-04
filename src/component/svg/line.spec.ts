@@ -38,13 +38,4 @@ describe('svg line class', () => {
     document.body.removeChild(line.element)
     document.body.style.removeProperty('--color-test1')
   })
-
-  /* unused because of CSS animations instead of SMIL (FF bug)
-  it('creates animation for line', () => {
-    const line = new Line({ x: 9, y: 10 }, { x: 11, y: 12 })
-    line.setRotateAnimation({ intervalInSeconds: 60 * 60, delayInSeconds: 1 * 60, from: 0, to: 10 })
-    line.setRotateAnimation({ intervalInSeconds: 60 * 60, delayInSeconds: 2 * 60, from: 1, to: 11 })
-    expect(line.element.children[0].tagName).toBe('animateTransform')
-  })
-  */
 })

@@ -16,7 +16,7 @@ customElements.define('custom-clock', CustomClockComponent)
 ```
 
 ```html
-<custom-clock size="100px"></custom-clock>
+<custom-clock size="100px" stroke-color="#536dfe"></custom-clock>
 ```
 
 You can use existing JavaScript & TypeScript definitions via special import:

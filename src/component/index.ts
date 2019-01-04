@@ -20,7 +20,7 @@ const OUTER_CIRCLE_RADIUS = 48
 const INNER_CIRCLE_RADIUS = 46
 
 const RADIUS_RATIO = OUTER_CIRCLE_RADIUS / INNER_CIRCLE_RADIUS
-const TRANSLATE_RATIO = RADIUS_RATIO * (VIEW_BOX_SIZE / OUTER_CIRCLE_RADIUS)
+const TRANSLATE_RATIO = RADIUS_RATIO * (100 / OUTER_CIRCLE_RADIUS)
 
 const OUTER_CIRCLE_LEN = 2 * Math.PI * (OUTER_CIRCLE_RADIUS - 1)
 const INNER_CIRCLE_LEN = 2 * Math.PI * (INNER_CIRCLE_RADIUS - 1)
@@ -38,22 +38,18 @@ const STYLE = `
   .outer-circle {
     stroke-dasharray: ${OUTER_CIRCLE_LEN};
     stroke-dashoffset: ${OUTER_CIRCLE_LEN};
-    animation: outer-circle 60s linear infinite;
-    animation-delay: var(--secondDelay);
   }
-  @keyframes outer-circle {
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-
   .inner-circle {
     stroke-dasharray: ${INNER_CIRCLE_LEN};
     stroke-dashoffset: ${INNER_CIRCLE_LEN};
-    animation: inner-circle 60s linear infinite;
+  }
+  .outer-circle,
+  .inner-circle {
+    animation: circle 60s linear infinite;
     animation-delay: var(--secondDelay);
   }
-  @keyframes inner-circle {
+
+  @keyframes circle {
     to {
       stroke-dashoffset: 0;
     }
@@ -65,6 +61,9 @@ export class CustomClockComponent extends HTMLElement {
   public $highlightedHourList: number[] = []
   private _shadowRoot: ShadowRoot
   private parentDiv: HTMLDivElement
+  private get variableNamespace(): CSSStyleDeclaration {
+    return this.parentDiv.style
+  }
 
   private innerSVGElementSet = new Set<SVGBaseElement>()
   private date = new Date()
@@ -150,7 +149,7 @@ export class CustomClockComponent extends HTMLElement {
     const { style } = this._shadowRoot.host as HTMLElement
     style.display = 'inline-block'
     if (!this.hasAttribute('stroke-color')) {
-      style.setProperty('--strokeColor', EBorderColor.DEEP_PURPLE)
+      this.variableNamespace.setProperty('--strokeColor', EBorderColor.DEEP_PURPLE)
     }
     this.setDelay()
 
@@ -173,13 +172,13 @@ export class CustomClockComponent extends HTMLElement {
         Object.assign(this.parentDiv.style, { width: newValue, height: newValue })
         break
       case 'stroke-color':
-        style.setProperty('--strokeColor', newValue || EBorderColor.DEEP_PURPLE)
+        this.variableNamespace.setProperty('--strokeColor', newValue || EBorderColor.DEEP_PURPLE)
         break
     }
   }
 
   private setDelay(): void {
-    const { style } = this._shadowRoot.host as HTMLElement
+    const style = this.variableNamespace
     this.date = new Date()
 
     style.setProperty('--secondDelay', `${-this.date.getSeconds()}s`)
@@ -212,6 +211,7 @@ export class CustomClockComponent extends HTMLElement {
       })
   }
 
+  // TODO: move to utils
   private triggerReflow(): void {
     void document.body.offsetHeight
   }

@@ -12,8 +12,7 @@ export class Line extends SVGBaseElement {
     this.element.setAttribute('y2', String(Math.abs(p2.y - p1.y)))
 
     const rP = this.selectRotationPoint(p1, p2)
-    // this.element.setAttribute('transform', `translate(${rP.x},${rP.y})`)
-    this.element.style.transform = `translate(${rP.x}%, ${rP.y}%)`
+    this.element.style.transform = getCSSTransformProperty(rP)
 
     this.element.style.setProperty('stroke', params.color ? getColor(params.color) : 'black')
 
@@ -22,6 +21,14 @@ export class Line extends SVGBaseElement {
         ? `var(--${color.name})`
         : `${color.value}`
     }
+
+    /**
+     * Pixel units directly equivalent to SVG user units
+     * https://oreillymedia.github.io/Using_SVG/guide/units.html#units-absolute-reference
+     */
+    function getCSSTransformProperty(p: Point): string {
+      return `translate(${p.x}px, ${p.y}px)`
+    }
   }
 
   public setRotateAnimation(
@@ -29,8 +36,7 @@ export class Line extends SVGBaseElement {
       delayInSeconds: { type: 'reference', name: string } | { type: 'value', value: number },
     },
   ): SVGBaseElement {
-    const [firstElement] = this.appendAnimateTransformTags()
-
+    // TODO: use `data-reference` property instead of class
     const rndClassName = `line-${Math.round(Math.random() * 10e4)}`
     this.element.classList.add(rndClassName)
 
@@ -59,16 +65,6 @@ export class Line extends SVGBaseElement {
         ? `var(--${params.delayInSeconds.name})`
         : `${params.delayInSeconds.value}s`
     }
-  }
-
-  private appendAnimateTransformTags(): [SVGElement, SVGElement] {
-    if (!this.element.children.length) {
-      for (let i = 1; i <= 2; i++) {
-        this.element.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'animateTransform'))
-      }
-    }
-    const [first, second] = this.element.querySelectorAll('animateTransform')
-    return [first as SVGElement, second as SVGElement]
   }
 
   /**

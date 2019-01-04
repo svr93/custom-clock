@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.1.1 (January 4, 2019)
+
+* Remove unused `animateTransform` tags
+
+* Move CSS variables to nested div (keep internal state in shadow-root)
+
+* Reduce npm package size
+
 ## 1.1.0 (January 4, 2019)
 
 * New attribute added: `stroke-color`
