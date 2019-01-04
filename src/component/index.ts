@@ -6,6 +6,7 @@ import { Line } from './svg/line.js'
 
 export enum EAttribute {
   size,
+  'stroke-color',
 }
 type Attribute = keyof typeof EAttribute
 
@@ -148,7 +149,9 @@ export class CustomClockComponent extends HTMLElement {
   public connectedCallback(): void {
     const { style } = this._shadowRoot.host as HTMLElement
     style.display = 'inline-block'
-    style.setProperty('--strokeColor', EBorderColor.DEEP_PURPLE)
+    if (!this.hasAttribute('stroke-color')) {
+      style.setProperty('--strokeColor', EBorderColor.DEEP_PURPLE)
+    }
     this.setDelay()
 
     this.setAttribute('project', 'https://github.com/svr93/custom-clock')
@@ -163,9 +166,15 @@ export class CustomClockComponent extends HTMLElement {
   }
 
   public attributeChangedCallback(name: Attribute, _: string, newValue: string): void {
+    const { style } = this._shadowRoot.host as HTMLElement
+
     switch (name) {
       case 'size':
         Object.assign(this.parentDiv.style, { width: newValue, height: newValue })
+        break
+      case 'stroke-color':
+        style.setProperty('--strokeColor', newValue || EBorderColor.DEEP_PURPLE)
+        break
     }
   }
 

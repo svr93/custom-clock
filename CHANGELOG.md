@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.0 (January 4, 2019)
+
+* New attribute added: `stroke-color`
+
 ## 1.0.0 (January 3, 2019)
 
 * Change description & add useful information about predefined names
