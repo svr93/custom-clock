@@ -87,20 +87,23 @@ export class CustomClockComponent extends HTMLElement {
         <svg xlmns="http://www.w3.org/2000/svg" viewBox="0 0 ${VIEW_BOX_SIZE} ${VIEW_BOX_SIZE}">
           <g class="circle">
             ${
-              new Circle(OUTER_CIRCLE_RADIUS, { borderColor: EBorderColor.DEEP_PURPLE })
+              new Circle(OUTER_CIRCLE_RADIUS, { borderColor: { type: 'reference', name: 'strokeColor' } })
                 .addToSet(this.innerSVGElementSet)
             }
           </g>
           <g class="circle">
             ${
-              new Circle(OUTER_CIRCLE_RADIUS + 1, { borderColor: 'white', borderWidth: 2 })
+              new Circle(OUTER_CIRCLE_RADIUS + 1, {
+                borderColor: { type: 'value', value: 'white' },
+                borderWidth: 2,
+              })
                 .addClass('outer-circle')
                 .addToSet(this.innerSVGElementSet)
             }
           </g>
           <g class="circle">
             ${
-              new Circle(INNER_CIRCLE_RADIUS, { borderColor: EBorderColor.DEEP_PURPLE })
+              new Circle(INNER_CIRCLE_RADIUS, { borderColor: { type: 'reference', name: 'strokeColor' } })
                 .addClass('inner-circle')
                 .addToSet(this.innerSVGElementSet)
             }

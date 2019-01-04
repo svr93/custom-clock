@@ -1,8 +1,5 @@
 import { Point, SVGBaseElement } from './abstract/svg-base-element.js'
-
-type CSSColor =
-{ type: 'reference', name: string } |
-{ type: 'value', value: string }
+import { CSSColor } from './abstract/declarations/index'
 
 export class Line extends SVGBaseElement {
   constructor(p1: Point, p2: Point, params: Partial<{ color: CSSColor }> = {}) {
