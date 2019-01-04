@@ -108,7 +108,7 @@ export class CustomClockComponent extends HTMLElement {
           ${
             // minute
             new Line(center, { ...center, x: center.x + INNER_CIRCLE_RADIUS / 1.125 }, {
-              color: { type: 'value', value: EBorderColor.DEEP_PURPLE },
+              color: { type: 'reference', name: 'strokeColor' },
             })
             .setRotateAnimation({
               delayInSeconds: { type: 'reference', name: 'minuteDelay' },
@@ -121,7 +121,7 @@ export class CustomClockComponent extends HTMLElement {
           ${
             // hour
             new Line(center, { ...center, x: center.x + INNER_CIRCLE_RADIUS / 1.5 }, {
-              color: { type: 'value', value: EBorderColor.DEEP_PURPLE },
+              color: { type: 'reference', name: 'strokeColor' },
             })
             .setRotateAnimation({
               delayInSeconds: { type: 'reference', name: 'hourDelay' },
@@ -145,6 +145,7 @@ export class CustomClockComponent extends HTMLElement {
   public connectedCallback(): void {
     const { style } = this._shadowRoot.host as HTMLElement
     style.display = 'inline-block'
+    style.setProperty('--strokeColor', EBorderColor.DEEP_PURPLE)
     this.setDelay()
 
     this.setAttribute('project', 'https://github.com/svr93/custom-clock')
