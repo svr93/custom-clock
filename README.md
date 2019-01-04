@@ -30,3 +30,4 @@ Please see [the discussion](https://twitter.com/treshugart/status/10728120985419
 ### Attributes
 
 - size (CSS value for clock width & height)
+- stroke-color (CSS value)

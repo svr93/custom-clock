@@ -1,7 +1,8 @@
 import { Point, SVGBaseElement } from './abstract/svg-base-element.js'
+import { CSSColor } from './abstract/declarations/index'
 
 export class Line extends SVGBaseElement {
-  constructor(p1: Point, p2: Point, params: Partial<{ color: string }> = {}) {
+  constructor(p1: Point, p2: Point, params: Partial<{ color: CSSColor }> = {}) {
     super('line')
 
     this.element.setAttribute('x1', '0')
@@ -14,7 +15,13 @@ export class Line extends SVGBaseElement {
     // this.element.setAttribute('transform', `translate(${rP.x},${rP.y})`)
     this.element.style.transform = `translate(${rP.x}%, ${rP.y}%)`
 
-    this.element.setAttribute('stroke', params.color || 'black')
+    this.element.style.setProperty('stroke', params.color ? getColor(params.color) : 'black')
+
+    function getColor(color: CSSColor): string {
+      return color.type === 'reference'
+        ? `var(--${color.name})`
+        : `${color.value}`
+    }
   }
 
   public setRotateAnimation(

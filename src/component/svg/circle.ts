@@ -1,7 +1,11 @@
 import { SVGBaseElement } from './abstract/svg-base-element.js'
+import { CSSColor } from './abstract/declarations/index'
 
 export class Circle extends SVGBaseElement {
-  constructor(radius: number, params: Partial<{ borderColor: string, borderWidth: number }> = {}) {
+  constructor(radius: number, params: Partial<{
+    borderColor: CSSColor,
+    borderWidth: number,
+  }> = {}) {
     super('circle')
     const borderWidth = params.borderWidth || 1
     this.element.setAttribute('stroke-width', String(borderWidth))
@@ -12,7 +16,14 @@ export class Circle extends SVGBaseElement {
     // TODO: remove hard-coded `100`
     this.element.setAttribute('transform', 'rotate(-90) translate(-100)')
     this.element.setAttribute('fill', 'transparent')
-    this.element.setAttribute('stroke', params.borderColor || 'black')
+    this.element.style.setProperty('stroke', params.borderColor ? getColor(params.borderColor) : 'black')
+
+    // TODO: remove copy-pasted code
+    function getColor(color: CSSColor): string {
+      return color.type === 'reference'
+        ? `var(--${color.name})`
+        : `${color.value}`
+    }
   }
 
   public setRotateAnimation(
