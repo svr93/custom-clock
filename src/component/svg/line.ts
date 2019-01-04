@@ -12,8 +12,7 @@ export class Line extends SVGBaseElement {
     this.element.setAttribute('y2', String(Math.abs(p2.y - p1.y)))
 
     const rP = this.selectRotationPoint(p1, p2)
-    // this.element.setAttribute('transform', `translate(${rP.x},${rP.y})`)
-    this.element.style.transform = `translate(${rP.x}%, ${rP.y}%)`
+    this.element.style.transform = getCSSTransformProperty(rP)
 
     this.element.style.setProperty('stroke', params.color ? getColor(params.color) : 'black')
 
@@ -21,6 +20,14 @@ export class Line extends SVGBaseElement {
       return color.type === 'reference'
         ? `var(--${color.name})`
         : `${color.value}`
+    }
+
+    /**
+     * Pixel units directly equivalent to SVG user units
+     * https://oreillymedia.github.io/Using_SVG/guide/units.html#units-absolute-reference
+     */
+    function getCSSTransformProperty(p: Point): string {
+      return `translate(${p.x}px, ${p.y}px)`
     }
   }
 
