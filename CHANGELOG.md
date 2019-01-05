@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.0.0 (January 5, 2019)
+
+* Attribute `size` was renamed to `dial-size` (see [discussion](https://github.com/svr93/custom-clock/issues/28))
+
+* Make `hasAttribute`, `removeAttribute`, `setAttribute` methods type-safe
+
 ## 1.2.1 (January 5, 2019)
 
 * Default value used for `size` attribute - 100px
