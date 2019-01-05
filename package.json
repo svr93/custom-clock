@@ -1,6 +1,6 @@
 {
   "name": "custom-clock",
-  "version": "1.1.1",
+  "version": "1.2.1",
   "description": "Simple clock component built with SVG & CSS Animations",
   "browser": "dist/src/component/index.js",
   "types": "dist/src/component/index.d.ts",

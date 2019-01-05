@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.2.1 (January 5, 2019)
+
+* Default value used for `size` attribute - 100px
+
+* Each attribute change passes through `CSS.supports` validation; warning used in case of unacceptable value
+
 ## 1.1.1 (January 4, 2019)
 
 * Remove unused `animateTransform` tags
