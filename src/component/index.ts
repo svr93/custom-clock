@@ -7,7 +7,7 @@ import { Line } from './svg/line.js'
 import { isSupportedCSSColor, isSupportedCSSSize } from '../utils/is-supported-css-value.js'
 
 export enum EAttribute {
-  size,
+  'dial-size',
   'stroke-color',
 }
 type Attribute = keyof typeof EAttribute
@@ -59,7 +59,7 @@ const STYLE = `
 `
 
 const defaults = Object.freeze({
-  size: '100px',
+  'dial-size': '100px',
   'stroke-color': EBorderColor.DEEP_PURPLE,
 })
 
@@ -159,8 +159,8 @@ export class CustomClockComponent extends HTMLElement {
   public connectedCallback(): void {
     const { style } = this._shadowRoot.host as HTMLElement
     style.display = 'inline-block'
-    if (!this.hasAttribute('size')) {
-      const { size } = CustomClockComponent.defaults
+    if (!this.hasAttribute('dial-size')) {
+      const size = CustomClockComponent.defaults['dial-size']
       Object.assign(this.parentDiv.style, { width: size, height: size })
     }
     if (!this.hasAttribute('stroke-color')) {
@@ -181,14 +181,14 @@ export class CustomClockComponent extends HTMLElement {
 
   public attributeChangedCallback(name: Attribute, _: string, newValue: string): void {
     switch (name) {
-      case 'size':
+      case 'dial-size':
         if (newValue && !isSupportedCSSSize(newValue)) {
-          console.warn(`Attribute 'size' with value '${newValue}' is not supported`)
+          console.warn(`Attribute 'dial-size' with value '${newValue}' is not supported`)
           if (Number.isFinite(+newValue)) {
             console.warn(`Did you mean '${newValue}px'?`)
           }
         }
-        const size = newValue || CustomClockComponent.defaults.size
+        const size = newValue || CustomClockComponent.defaults['dial-size']
         Object.assign(this.parentDiv.style, { width: size, height: size })
         break
       case 'stroke-color':
@@ -198,6 +198,18 @@ export class CustomClockComponent extends HTMLElement {
         this.variableNamespace.setProperty('--strokeColor', newValue || CustomClockComponent.defaults['stroke-color'])
         break
     }
+  }
+
+  public hasAttribute(qualifiedName: Attribute | 'project'): boolean {
+    return super.hasAttribute(qualifiedName)
+  }
+
+  public removeAttribute(qualifiedName: Attribute | 'project'): void {
+    return super.removeAttribute(qualifiedName)
+  }
+
+  public setAttribute(qualifiedName: Attribute | 'project', value: string): void {
+    return super.setAttribute(qualifiedName, value)
   }
 
   private setDelay(): void {

@@ -16,7 +16,7 @@ customElements.define('custom-clock', CustomClockComponent)
 ```
 
 ```html
-<custom-clock size="100px" stroke-color="#536dfe"></custom-clock>
+<custom-clock dial-size="100px" stroke-color="#536dfe"></custom-clock>
 ```
 
 You can use existing JavaScript & TypeScript definitions via special import:
@@ -29,5 +29,5 @@ Please see [the discussion](https://twitter.com/treshugart/status/10728120985419
 
 ### Attributes
 
-- size (CSS value for clock width & height)
+- dial-size (CSS value for clock width & height)
 - stroke-color (CSS value)

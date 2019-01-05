@@ -9,18 +9,18 @@ describe('attribute check', () => {
     done()
   })
 
-  it('checks size attribute', async (done) => {
+  it('checks dial-size attribute', async (done) => {
     await customElements.whenDefined('custom-clock')
     const element = document.createElement('custom-clock')
     document.body.appendChild(element)
 
-    element.setAttribute('size', '200px')
+    element.setAttribute('dial-size', '200px')
     expect(Math.round(element.getBoundingClientRect().height)).toBe(200)
     expect(Math.round(element.getBoundingClientRect().width)).toBe(200)
     done()
   })
 
-  it('checks default size attribute', async (done) => {
+  it('checks default dial-size attribute', async (done) => {
     await customElements.whenDefined('custom-clock')
     const element = document.createElement('custom-clock')
     document.body.appendChild(element)
@@ -28,9 +28,9 @@ describe('attribute check', () => {
     triggerReflow()
     checkDefaultSize()
 
-    element.setAttribute('size', '200px')
+    element.setAttribute('dial-size', '200px')
     triggerReflow()
-    element.removeAttribute('size')
+    element.removeAttribute('dial-size')
     triggerReflow()
     checkDefaultSize()
 
