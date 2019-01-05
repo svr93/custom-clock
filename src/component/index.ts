@@ -56,8 +56,17 @@ const STYLE = `
   }
 `
 
+const defaults = Object.freeze({
+  size: '100px',
+  'stroke-color': EBorderColor.DEEP_PURPLE,
+})
+
 export class CustomClockComponent extends HTMLElement {
   public static observedAttributes = $enum(EAttribute).getKeys()
+  public static get defaults(): Record<Attribute, string> {
+    return defaults
+  }
+
   public $highlightedHourList: number[] = []
   private _shadowRoot: ShadowRoot
   private parentDiv: HTMLDivElement
@@ -148,8 +157,12 @@ export class CustomClockComponent extends HTMLElement {
   public connectedCallback(): void {
     const { style } = this._shadowRoot.host as HTMLElement
     style.display = 'inline-block'
+    if (!this.hasAttribute('size')) {
+      const { size } = CustomClockComponent.defaults
+      Object.assign(this.parentDiv.style, { width: size, height: size })
+    }
     if (!this.hasAttribute('stroke-color')) {
-      this.variableNamespace.setProperty('--strokeColor', EBorderColor.DEEP_PURPLE)
+      this.variableNamespace.setProperty('--strokeColor', CustomClockComponent.defaults['stroke-color'])
     }
     this.setDelay()
 
@@ -165,14 +178,13 @@ export class CustomClockComponent extends HTMLElement {
   }
 
   public attributeChangedCallback(name: Attribute, _: string, newValue: string): void {
-    const { style } = this._shadowRoot.host as HTMLElement
-
     switch (name) {
       case 'size':
-        Object.assign(this.parentDiv.style, { width: newValue, height: newValue })
+        const size = newValue || CustomClockComponent.defaults.size
+        Object.assign(this.parentDiv.style, { width: size, height: size })
         break
       case 'stroke-color':
-        this.variableNamespace.setProperty('--strokeColor', newValue || EBorderColor.DEEP_PURPLE)
+        this.variableNamespace.setProperty('--strokeColor', newValue || CustomClockComponent.defaults['stroke-color'])
         break
     }
   }
