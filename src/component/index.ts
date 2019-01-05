@@ -200,6 +200,11 @@ export class CustomClockComponent extends HTMLElement {
     }
   }
 
+  /**
+   * Each `*Attribute` method was rewritten to be type-safe.
+   * It violates the Liskov substitution principle but seems to be reasonable in our case.
+   * See https://en.wikipedia.org/wiki/Covariance_and_contravariance_(computer_science)#Covariant_method_argument_type
+   */
   public hasAttribute(qualifiedName: Attribute | 'project'): boolean {
     return super.hasAttribute(qualifiedName)
   }
