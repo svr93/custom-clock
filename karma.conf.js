@@ -5,6 +5,7 @@ module.exports = function(config) {
       { pattern: './dist/node_modules/**/*.js', type: 'module' },
       { pattern: './dist/src/component/**/*.js', type: 'module' },
       { pattern: './dist/src/global-declarations/index.js', type: 'module' },
+      { pattern: './dist/src/utils/**/*.js', type: 'module' },
       { pattern: './dist/src/**/*.spec.js', type: 'module' },
     ],
     frameworks: ['jasmine'],

@@ -4,6 +4,8 @@ import { SVGBaseElement } from './svg/abstract/svg-base-element.js'
 import { Circle } from './svg/circle.js'
 import { Line } from './svg/line.js'
 
+import { isSupportedCSSColor, isSupportedCSSSize } from '../utils/is-supported-css-value.js'
+
 export enum EAttribute {
   size,
   'stroke-color',
@@ -180,10 +182,19 @@ export class CustomClockComponent extends HTMLElement {
   public attributeChangedCallback(name: Attribute, _: string, newValue: string): void {
     switch (name) {
       case 'size':
+        if (newValue && !isSupportedCSSSize(newValue)) {
+          console.warn(`Attribute 'size' with value '${newValue}' is not supported`)
+          if (Number.isFinite(+newValue)) {
+            console.warn(`Did you mean '${newValue}px'?`)
+          }
+        }
         const size = newValue || CustomClockComponent.defaults.size
         Object.assign(this.parentDiv.style, { width: size, height: size })
         break
       case 'stroke-color':
+        if (newValue && !isSupportedCSSColor(newValue)) {
+          console.warn(`Attribute 'stroke-color' with value '${newValue}' is not supported`)
+        }
         this.variableNamespace.setProperty('--strokeColor', newValue || CustomClockComponent.defaults['stroke-color'])
         break
     }
